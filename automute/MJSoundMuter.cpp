@@ -20,3 +20,20 @@ void SoundMuter::mute()
     propertyAddress.mSelector = kAudioDevicePropertyMute;
     AudioObjectSetPropertyData(outputDevice, &propertyAddress, 0, nullptr, sizeof(mute), &mute);
 }
+
+void SoundMuter::unmute()
+{
+    AudioObjectPropertyAddress propertyAddress = {
+            kAudioHardwarePropertyDefaultOutputDevice,
+            kAudioObjectPropertyScopeOutput,
+            kAudioObjectPropertyElementMaster
+    };
+    UInt32 propSize = sizeof(AudioDeviceID);
+    AudioDeviceID outputDevice;
+    __Verify_noErr(AudioObjectGetPropertyData(
+            kAudioObjectSystemObject, &propertyAddress, 0, NULL, &propSize, &outputDevice));
+
+    UInt32 mute = 0;
+    propertyAddress.mSelector = kAudioDevicePropertyMute;
+    AudioObjectSetPropertyData(outputDevice, &propertyAddress, 0, nullptr, sizeof(mute), &mute);
+}

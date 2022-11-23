@@ -5,6 +5,7 @@
 class SoundMuter {
 public:
     void mute();
+    void unmute();
 };
 
 #endif /* MJSoundMuter_hpp */
